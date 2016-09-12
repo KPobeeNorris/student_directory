@@ -38,13 +38,14 @@ end
    puts " -------------".center(50)
  end
 
- # def print(students)
- #   students.each do |student|
- #     puts "#{student[:name]} (#{student[:cohort]} cohort): Country of birth: #{student[:country]}. Gender: #{student[:gender]}. Hobbies: #{student[:hobbies]}".center(150)
- #   end
- # end
+ def print(students)
+   students.each do |student|
+     puts "#{student[:name]} (#{student[:cohort]} cohort): Country of birth: #{student[:country]}. Gender: #{student[:gender]}. Hobbies: #{student[:hobbies]}".center(100)
+   end
+ end
 
  # Exercies 8 - No 4:
+ # Description: alternative way of printing our all students
  # def print(students)
  #   count = 0
  #   until count == students.length
@@ -56,6 +57,7 @@ end
  # end
 
 # Exercise 8 - No 3:
+# Description: Print if name is less than 12 characters long
 # def print(students)
 #   students.each do |student|
 #     if student[:name].length < 12
@@ -66,6 +68,7 @@ end
 
 
 # Exercise 8 - No 2:
+# Description: print if name begins with specific letter
 # def print(students)
 #   students.each do |student|
 #     if student[:name].start_with? "D"
