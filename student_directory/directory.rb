@@ -17,17 +17,25 @@ def input_students
   while !name.empty? do
     #add the student hash to the array
     students << {name: name, cohort: cohort, country: country, gender: gender, hobbies: hobbies}
-    puts "Now we have #{students.count} students"
+    if students.count == 1
+      puts "Now we have #{students.count} student"
+    elsif students.count > 1
+      puts "Now we have #{students.count} students"
+    end
     # gets another name from the user
     name = gets.chomp.capitalize
-    puts "Country of birth:"
-    country = gets.chomp.capitalize
-    puts "Cohort:"
-    cohort = gets.chomp
-    puts "Gender:"
-    gender = gets.chomp
-    puts "Hobbies:"
-    hobbies = gets.chomp
+      if name != ''
+        puts "Country of birth:"
+        country = gets.chomp.capitalize
+        puts "Cohort:"
+        cohort = gets.chomp
+        puts "Gender:"
+        gender = gets.chomp
+        puts "Hobbies:"
+        hobbies = gets.chomp
+      end
+
+
   end
   # return the array of students
   students
@@ -86,7 +94,11 @@ end
 
 
 def print_footer(names)
-  puts "Overall, we have #{names.count} great students".center(100)
+  if names.count == 1
+    puts "Overall, we have #{names.count} great student".center(100)
+  elsif names.count > 1
+    puts "Overall, we have #{names.count} great students".center(100)
+  end
 end
 #nothing happens until we call the methods
 students = input_students
