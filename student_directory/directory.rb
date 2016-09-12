@@ -34,8 +34,8 @@ def input_students
 end
 
  def print_header
-   puts "The students of Villans Academy".center(50)
-   puts " -------------".center(50)
+   puts "The students of Villans Academy".center(100)
+   puts " -------------".center(100)
  end
 
  def print(students)
@@ -86,7 +86,7 @@ end
 
 
 def print_footer(names)
-  puts "Overall, we have #{names.count} great students".center(50)
+  puts "Overall, we have #{names.count} great students".center(100)
 end
 #nothing happens until we call the methods
 students = input_students
