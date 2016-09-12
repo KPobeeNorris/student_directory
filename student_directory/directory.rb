@@ -22,11 +22,36 @@ end
    puts " -------------"
  end
 
- def print(students)
-   students.each do |student|
-     puts "#{student[:name]} (#{student[:cohort]} cohort)"
-   end
+ # def print(students)
+ #   students.each do |student|
+ #     if student ==
+ #     puts "#{student[:name]} (#{student[:cohort]} cohort)"
+ #   end
+ # end
+
+# Exercise 8 - No 3:
+# def print(students)
+#   students.each do |student|
+#     if student[:name].length < 12
+#       puts "#{student[:name]} (#{student[:cohort]} cohort)"
+#     end
+#   end
+# end
+
+def print(students)
+  students.each do |student|
+    if student[:name[0]] == "D"
+      puts "#{student[:name]}"
+    end
+  end
 end
+
+# Exercise 8 - No 1:
+# def print(students)
+#    students.each_with_index do |student, index|
+#      puts "#{index + 1} #{student[:name]} (#{student[:cohort]} cohort)"
+#    end
+# end
 
 def print_footer(names)
   puts "Overall, we have #{names.count} great students"
