@@ -5,19 +5,25 @@ def input_students
   students = []
   while true
   # get the first name
-  name = gets.chomp.capitalize
+  name = gets[0...-1].capitalize
   if name.empty?
     break
   else
   puts "Add country of birth:"
   country = gets.chomp.capitalize
+  if country == ''
+    country = 'TBC'
+  end
   puts "Which cohort are you joining?"
   cohort = gets.chomp.capitalize
+  if cohort == ''
+    cohort = 'TBC'
+  end
   #add the student hash to the array
   students << {
-    name: name,
-    cohort: cohort,
-    country: country
+    name: name.to_sym,
+    cohort: cohort.to_sym,
+    country: country.to_sym
   }
   end
   if students.count == 1
@@ -51,7 +57,9 @@ def print_footer(names)
 end
 #nothing happens until we call the methods
 students = input_students
-print_header
+if !students.empty?
+  print_header
+end
 print(students)
 #cosort(students)
 print_footer(students)
