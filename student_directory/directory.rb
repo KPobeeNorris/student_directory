@@ -6,17 +6,17 @@ def input_students
   # create an empty array
   while true
   # get the first name
-  name = gets[0...-1].capitalize
+  name = STDIN.gets[0...-1].capitalize
   if name.empty?
     break
   else
   puts "Add country of birth:"
-  country = gets.chomp.capitalize
+  country = STDIN.gets.chomp.capitalize
   if country == ''
     country = 'TBC'
   end
   puts "Which cohort are you joining?"
-  cohort = gets.chomp.capitalize
+  cohort = STDIN.gets.chomp.capitalize
   if cohort == ''
     cohort = 'TBC'
   end
@@ -67,7 +67,7 @@ end
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
@@ -114,8 +114,8 @@ def save_students
   file.close
 end
 
-def load_students
-  file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort, country = line.chomp.split(',')
     @students << {name: name, cohort: cohort, country: country}
@@ -123,7 +123,20 @@ def load_students
   file.close
 end
 
+def try_load_students
+  filename = ARGV.first # first argument from the command line
+  return if filename.nil? # get out of the method if it isn't given
+  if File.exists?(filename) # if it exists
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else # if it doesn't exists
+    puts "Sorry, #{filename} doesn't exist."
+    exit # quit the program
+  end
+end
+
 #nothing happens until we call the methods
+try_load_students
 interactive_menu
 # students = input_students
 # if !students.empty?
