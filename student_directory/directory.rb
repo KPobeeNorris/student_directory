@@ -20,11 +20,17 @@ def input_students
     cohort = 'TBC'
   end
   #add the student hash to the array
+  puts "You've entered the following: Name - #{name}, Country -#{country} and ohort - #{cohort}.  Do you want to commit this data (Y/N)?"
+  answer = gets.chomp.upcase
+  if answer == 'N'
+    break
+  else
   students << {
     name: name.to_sym,
     cohort: cohort.to_sym,
     country: country.to_sym
   }
+end
   end
   if students.count == 1
     puts "Now we have #{students.count} student"
