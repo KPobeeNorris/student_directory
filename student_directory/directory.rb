@@ -91,7 +91,7 @@ def print_menu
   puts "2. Show the students"
   puts "3. Save the list to students.csv"
   puts "4. Load the list from students.csv"
-  puts "9. Exit" # we'll be adding more later
+  puts "9. Exit"
 end
 
 
@@ -104,22 +104,26 @@ end
 
 
 def save_file
-  # open file for writing
+
   puts "Please enter name of file you wish to save to: "
   save_file = STDIN.gets.chomp
   if File.exists?(save_file)
     file = File.open(save_file, "w")
-    # iterate over the array of students
     @students.each do |student|
       student_data = [student[:name], student[:cohort], student[:country]]
       csv_line = student_data.join(",")
       file.puts csv_line
     end
     puts "You've saved the students!"
-    file.close
-  else
-    puts "File name not recognised, please try again."
-  end
+    #file.close
+    else
+      file = File.new(save_file, "w")
+      @students.each do |student|
+        student_data = [student[:name], student[:cohort], student[:country]]
+        csv_line = student_data.join(",")
+        file.puts csv_line
+      end
+    end
 end
 
 
@@ -127,39 +131,38 @@ def load_file
   puts "Please enter name of file you wish to load:"
   load_file = STDIN.gets.chomp
   if File.exists?(load_file)
-    file = File.open("students.csv", "r")
+    file = File.open(load_file, "r")
     file.readlines.each do |line|
       name, cohort, country = line.chomp.split(',')
       add_students(name: name, cohort: cohort, country: country)
     end
+    #file.close
+  else
+    file = File.new(load_file, "w")
     file.close
-end
-end
+    end
+  end
+#end
 
 def add_students(info)
   @students << info
 end
 
-
-def try_load_students
-  filename = ARGV.first # first argument from the command line
-  return if filename.nil? # get out of the method if it isn't given
-  if File.exists?(filename) # if it exists
-    load_students(filename)
-    puts "Loaded #{@students.count} from #{filename}"
-  else # if it doesn't exists
-    puts "Sorry, #{filename} doesn't exist."
-    exit # quit the program
-  end
-end
-
-try_load_students
 interactive_menu
 
-
-
-
-
+# def try_load_students
+#   filename = ARGV.first # first argument from the command line
+#   return if filename.nil? # get out of the method if it isn't given
+#   if File.exists?(filename) # if it exists
+#     load_students(filename)
+#     puts "Loaded #{@students.count} from #{filename}"
+#   else # if it doesn't exists
+#     puts "Sorry, #{filename} doesn't exist."
+#     exit # quit the program
+#   end
+# end
+#
+# try_load_students
 
 # Exercise 8 - No 8:
 #  def cosort(students)
