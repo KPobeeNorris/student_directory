@@ -3,9 +3,7 @@
 def input_students
   puts "Please enter the name(s) of the students"
   puts "To finish, just hit return twice"
-  # create an empty array
   while true
-  # get the first name
   name = STDIN.gets[0...-1].capitalize
   if name.empty?
     break
@@ -20,19 +18,14 @@ def input_students
   if cohort == ''
     cohort = 'TBC'
   end
-  #add the student hash to the array
   puts "You've entered the following: Name - #{name}, Country -#{country} and Cohort - #{cohort}." +
    " Is this data correct? (Y/N)?"
   answer = gets.chomp.upcase
   if answer == 'N'
     break
   else
-  @students << {
-    name: name.to_sym,
-    cohort: cohort.to_sym,
-    country: country.to_sym
-  }
-end
+    add_students(name: name, cohort: cohort, country: country)
+  end
   end
   if @students.count == 1
     puts "Now we have #{@students.count} student"
@@ -40,21 +33,21 @@ end
     puts "Now we have #{@students.count} students"
   end
 end
-
-  # return the array of students
-#  students - BLANKED OUT!
 end
+
 
  def print_header
    puts "The Students of Villains Academy".center(100)
    puts " -------------".center(100)
  end
 
+
  def print_students_list
    @students.each do |student|
      puts "#{student[:name]} (#{student[:cohort]} cohort): Country of birth: #{student[:country]}".center(100)
    end
  end
+
 
 def print_footer
   if @students.count == 1
@@ -64,8 +57,9 @@ def print_footer
   end
 end
 
+
 def interactive_menu
-  load_students
+  load_file
   puts "Loaded #{@students.count} students from previous sesssion."
   loop do
     print_menu
@@ -73,22 +67,24 @@ def interactive_menu
   end
 end
 
+
 def process(selection)
   case selection
     when "1"
       input_students
     when "2"
-      show_students
+      print_students
     when "3"
-      save_students
+      save_file
     when "4"
-      load_students
+      load_file
     when "9"
       puts "Thank you, come again!"
       exit # this will terminate the program
-    else "I don't know what you meant, try again"
+    else "Does not compute...try again."
     end
   end
+
 
 def print_menu
   puts "1. Input the students"
@@ -98,34 +94,52 @@ def print_menu
   puts "9. Exit" # we'll be adding more later
 end
 
-def show_students
+
+def print_students
   #if !students.empty?
   print_header
   print_students_list
   print_footer
 end
 
-def save_students
+
+def save_file
   # open file for writing
-  file = File.open("students.csv", "w")
-  # iterate over the array of students
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort], student[:country]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  puts "Please enter name of file you wish to save to: "
+  save_file = STDIN.gets.chomp
+  if File.exists?(save_file)
+    file = File.open(save_file, "w")
+    # iterate over the array of students
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort], student[:country]]
+      csv_line = student_data.join(",")
+      file.puts csv_line
+    end
+    puts "You've saved the students!"
+    file.close
+  else
+    puts "File name not recognised, please try again."
   end
-  file.close
-  puts "File successfully saved"
 end
 
-def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    name, cohort, country = line.chomp.split(',')
-    @students << {name: name, cohort: cohort, country: country}
-  end
-  file.close
+
+def load_file
+  puts "Please enter name of file you wish to load:"
+  load_file = STDIN.gets.chomp
+  if File.exists?(load_file)
+    file = File.open("students.csv", "r")
+    file.readlines.each do |line|
+      name, cohort, country = line.chomp.split(',')
+      add_students(name: name, cohort: cohort, country: country)
+    end
+    file.close
 end
+end
+
+def add_students(info)
+  @students << info
+end
+
 
 def try_load_students
   filename = ARGV.first # first argument from the command line
@@ -139,17 +153,9 @@ def try_load_students
   end
 end
 
-
-#nothing happens until we call the methods
 try_load_students
 interactive_menu
-# students = input_students
-# if !students.empty?
-#   print_header
-# end
-# print(students)
-# #cosort(students)
-# print_footer(students)
+
 
 
 
