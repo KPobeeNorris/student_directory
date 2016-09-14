@@ -84,6 +84,7 @@ def process(selection)
     when "4"
       load_students
     when "9"
+      puts "Thank you, come again!"
       exit # this will terminate the program
     else "I don't know what you meant, try again"
     end
