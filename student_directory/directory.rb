@@ -65,6 +65,8 @@ def print_footer
 end
 
 def interactive_menu
+  load_students
+  puts "Loaded #{@students.count} students from previous sesssion."
   loop do
     print_menu
     process(STDIN.gets.chomp)
@@ -112,6 +114,7 @@ def save_students
     file.puts csv_line
   end
   file.close
+  puts "File successfully saved"
 end
 
 def load_students(filename = "students.csv")
@@ -134,6 +137,7 @@ def try_load_students
     exit # quit the program
   end
 end
+
 
 #nothing happens until we call the methods
 try_load_students
